@@ -8,26 +8,22 @@
         :root { --gold: #D4AF37; --bg: #0a0a0a; --card: #161616; --text: #e0e0e0; --success: #27ae60; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* Opening Page */
         #opening-page { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle, #1a1a2e 0%, #000 100%); }
         .funky-img { width: 300px; height: 300px; border-radius: 50%; border: 5px solid var(--gold); margin-bottom: 20px; object-fit: cover; }
         
-        /* Quest Sections */
         .quest-section { display: none; min-height: 100vh; padding: 40px 20px; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         .game-card { background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid #333; max-width: 700px; width: 100%; }
         
-        /* Content Reveal */
         .reveal-box { display: none; margin-top: 30px; animation: slideUp 0.8s ease forwards; }
         .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
         .img-grid img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
 
-        /* UI Elements */
-        .btn { background: var(--gold); color: black; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 20px; }
+        .btn { background: var(--gold); color: black; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 20px; text-transform: uppercase; }
         .opt-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; background: #222; color: white; border: 1px solid #444; cursor: pointer; border-radius: 5px; }
-        input { padding: 12px; border-radius: 5px; border: 1px solid #444; background: #000; color: white; text-align: center; margin: 10px; }
+        input { padding: 12px; border-radius: 5px; border: 1px solid #444; background: #000; color: white; text-align: center; margin: 10px; font-size: 1rem; }
         
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .movie-tag { padding: 8px 12px; background: #333; border-radius: 5px; cursor: pointer; margin: 5px; display: inline-block; }
+        .movie-tag { padding: 8px 12px; background: #333; border-radius: 5px; cursor: pointer; margin: 5px; display: inline-block; font-size: 0.8rem; }
         .found { background: var(--gold) !important; color: black !important; text-decoration: line-through; }
     </style>
 </head>
@@ -43,11 +39,10 @@
         <div class="game-card">
             <h2 style="color: var(--gold);">Game 1: The Silver Milestone</h2>
             <div id="q1a">
-                <p>What color saree did Amma wear?</p>
+                <p>What color saree did Amma wear for the 25th Anniversary?</p>
                 <button class="opt-btn" onclick="nextSub('q1a', 'q1b')">Rani Pink</button>
                 <button class="opt-btn" onclick="alert('Try again!')">Green</button>
                 <button class="opt-btn" onclick="alert('Try again!')">Blue</button>
-                <button class="opt-btn" onclick="alert('Try again!')">Yellow</button>
             </div>
             <div id="q1b" style="display:none">
                 <p>What return gifts were given?</p>
@@ -58,67 +53,76 @@
                 <p>Which song did Janu and I dance to?</p>
                 <button class="opt-btn" onclick="nextSub('q1c', 'q1d')">Maahi Ve</button>
                 <button class="opt-btn" onclick="alert('Nope!')">Bole Chudiyan</button>
-                <button class="opt-btn" onclick="alert('Nope!')">Tum Hi Ho</button>
-                <button class="opt-btn" onclick="alert('Nope!')">Kala Chashma</button>
             </div>
             <div id="q1d" style="display:none">
-                <p>Which game did you play?</p>
+                <p>Which game did everyone play at the party?</p>
                 <button class="opt-btn" onclick="reveal(1)">Finish the Dialogue</button>
                 <button class="opt-btn" onclick="alert('Nope!')">Antakshari</button>
-                <button class="opt-btn" onclick="alert('Nope!')">Dumb Charades</button>
-                <button class="opt-btn" onclick="alert('Nope!')">Passing the Parcel</button>
             </div>
             <div id="reveal1" class="reveal-box">
                 <div class="img-grid"><img src="anniversary1.jpg"><img src="anniversary2.jpg"></div>
-                <button class="btn" onclick="showStage(2)">NEXT GAME</button>
+                <button class="btn" onclick="showStage(2)">Next Milestone ↓</button>
             </div>
         </div>
     </div>
 
     <div id="game2" class="quest-section">
         <div class="game-card">
-            <h2 style="color: var(--gold);">Game 2: The Doctor's Crossword</h2>
-            <p>Madhav is officially 50% done with his degree!</p>
-            <p>Across: The 4-letter medical degree he is pursuing?</p>
-            <input type="text" id="cross1" maxlength="4" placeholder="M _ _ _">
-            <br><button class="btn" onclick="checkCrossword()">Verify</button>
+            <h2 style="color: var(--gold);">Game 2: Priyanka's Achievement</h2>
+            <p>Priyanka joined a top B-school this year at an IIT known for its heritage and the longest campus in India. Where is she studying?</p>
+            <input type="text" id="vgsomAns" placeholder="City name...">
+            <br><button class="btn" onclick="checkVGSoM()">Unlock</button>
             <div id="reveal2" class="reveal-box">
-                <div class="img-grid"><img src="madhav1.jpg"><img src="madhav2.jpg"></div>
-                <button class="btn" onclick="showStage(3)">NEXT GAME</button>
+                <div class="img-grid"><img src="vgsom1.jpg"><img src="vgsom2.jpg"></div>
+                <p>"Thank you for making my dream of joining VGSoM, IIT Kharagpur possible!"</p>
+                <button class="btn" onclick="showStage(3)">Next Milestone ↓</button>
             </div>
         </div>
     </div>
 
     <div id="game3" class="quest-section">
         <div class="game-card">
-            <h2 style="color: var(--gold);">Game 3: Hampi Memoirs</h2>
-            <p>Our family trip earlier this year was to the historic ruins of _____.</p>
-            <input type="text" id="hampiAns">
-            <br><button class="btn" onclick="checkFill()">Unlock</button>
+            <h2 style="color: var(--gold);">Game 3: The Doctor's Path</h2>
+            <p>Madhav reached the 50% mark of his degree this year! What is the degree?</p>
+            <input type="text" id="cross1" maxlength="4" placeholder="_ _ _ _">
+            <br><button class="btn" onclick="checkCrossword()">Verify</button>
             <div id="reveal3" class="reveal-box">
-                <div class="img-grid"><img src="hampi1.jpg"><img src="hampi2.jpg"></div>
-                <button class="btn" onclick="showStage(4)">NEXT GAME</button>
+                <div class="img-grid"><img src="madhav1.jpg"><img src="madhav2.jpg"></div>
+                <button class="btn" onclick="showStage(4)">Next Milestone ↓</button>
             </div>
         </div>
     </div>
 
     <div id="game4" class="quest-section">
         <div class="game-card">
-            <h2 style="color: var(--gold);">Game 4: Amma's Milestone</h2>
-            <p>Unscramble Amma's age milestone this year:</p>
-            <h3 style="letter-spacing: 10px;">F Y I T F</h3>
-            <input type="text" id="scrambleAns">
-            <br><button class="btn" onclick="checkScramble()">Unlock</button>
+            <h2 style="color: var(--gold);">Game 4: Family Travels</h2>
+            <p>We explored the architectural ruins of this UNESCO site as a family earlier this year:</p>
+            <input type="text" id="hampiAns" placeholder="Place Name...">
+            <br><button class="btn" onclick="checkFill()">Unlock</button>
             <div id="reveal4" class="reveal-box">
-                <div class="img-grid"><img src="amma1.jpg"><img src="amma2.jpg"></div>
-                <button class="btn" onclick="showStage(5)">NEXT GAME</button>
+                <div class="img-grid"><img src="hampi1.jpg"><img src="hampi2.jpg"></div>
+                <button class="btn" onclick="showStage(5)">Next Milestone ↓</button>
             </div>
         </div>
     </div>
 
     <div id="game5" class="quest-section">
         <div class="game-card">
-            <h2 style="color: var(--gold);">Game 5: The Film Hunt</h2>
+            <h2 style="color: var(--gold);">Game 5: Amma's Milestone</h2>
+            <p>Unscramble the age Amma celebrated this year:</p>
+            <h3 style="letter-spacing: 10px;">F Y I T F</h3>
+            <input type="text" id="scrambleAns" placeholder="Unscramble it...">
+            <br><button class="btn" onclick="checkScramble()">Unlock</button>
+            <div id="reveal5" class="reveal-box">
+                <div class="img-grid"><img src="amma1.jpg"><img src="amma2.jpg"></div>
+                <button class="btn" onclick="showStage(6)">The Final Challenge ↓</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game6" class="quest-section">
+        <div class="game-card">
+            <h2 style="color: var(--gold);">Game 6: The 2025 Film Hunt</h2>
             <p>Find 10 Telugu Blockbusters of 2025 to see your messages!</p>
             <div id="movies">
                 <span class="movie-tag" onclick="find(this)">GAMECHANGER</span>
@@ -132,17 +136,18 @@
                 <span class="movie-tag" onclick="find(this)">SANKRANT</span>
                 <span class="movie-tag" onclick="find(this)">VEERAMALLU</span>
             </div>
-            <div id="reveal5" class="reveal-box">
-                <h2 style="color:var(--success)">GOOD JOB, NANNA!</h2>
-                <button class="btn" onclick="showStage(6)">VIEW FINAL SURPRISE</button>
+            <div id="reveal6" class="reveal-box">
+                <h2 style="color:var(--success)">WELL DONE, NANNA!</h2>
+                <button class="btn" onclick="showStage(7)">OPEN FINAL SURPRISE</button>
             </div>
         </div>
     </div>
 
-    <div id="game6" class="quest-section">
-        <h1 style="color:var(--gold)">Happy Birthday, Nanna!</h1>
+    <div id="game7" class="quest-section">
+        <h1 style="color:var(--gold)">Your Birthday Letters</h1>
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; width: 100%; max-width: 900px;">
-            <div style="background:#111; padding:20px; border-top: 3px solid var(--gold);">"Happy Birthday Nanna! You're the best. - Priyanka"</div>
+            <div style="background:#111; padding:20px; border-top: 3px solid var(--gold);">"Happy Birthday Nanna! My journey at VGSoM is a tribute to your hard work. - Priyanka"</div>
+            <div style="background:#111; padding:20px; border-top: 3px solid var(--gold);">"To the best Nanna, proud to be halfway through MBBS for you! - Madhav"</div>
             </div>
         <div style="margin-top:50px;">
             <video controls style="width:100%; max-width:700px; border: 3px solid var(--gold);">
@@ -164,23 +169,27 @@
         function reveal(n) {
             document.getElementById('reveal'+n).style.display='block';
         }
+        function checkVGSoM() {
+            if(document.getElementById('vgsomAns').value.toLowerCase().includes('kharagpur')) reveal(2);
+            else alert("Think of the IIT city!");
+        }
         function checkCrossword() {
-            if(document.getElementById('cross1').value.toUpperCase() === 'MBBS') reveal(2);
-            else alert("Try again!");
+            if(document.getElementById('cross1').value.toUpperCase() === 'MBBS') reveal(3);
+            else alert("Think of the degree!");
         }
         function checkFill() {
-            if(document.getElementById('hampiAns').value.toLowerCase().includes('hampi')) reveal(3);
-            else alert("Think of the ruins!");
+            if(document.getElementById('hampiAns').value.toLowerCase().includes('hampi')) reveal(4);
+            else alert("Think of the Hampi ruins!");
         }
         function checkScramble() {
-            if(document.getElementById('scrambleAns').value.toLowerCase() === 'fifty') reveal(4);
-            else alert("Check the letters!");
+            if(document.getElementById('scrambleAns').value.toLowerCase() === 'fifty') reveal(5);
+            else alert("Check the spelling!");
         }
         let foundCount = 0;
         function find(tag) {
             if(!tag.classList.contains('found')) {
                 tag.classList.add('found'); foundCount++;
-                if(foundCount === 10) reveal(5);
+                if(foundCount === 10) reveal(6);
             }
         }
     </script>
