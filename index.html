@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Dad!</title>
+    <style>
+        :root {
+            --gold: #f39c12;
+            --dark: #0f0f1a;
+        }
+
+        body {
+            background: var(--dark);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            transition: background 1.5s ease;
+        }
+
+        /* Countdown Styles */
+        #countdown-container h1 {
+            letter-spacing: 5px;
+            color: var(--gold);
+        }
+
+        #timer {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 800;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .unit { font-size: 0.9rem; color: #888; text-transform: uppercase; display: block; }
+
+        /* Surprise Section (Hidden by default) */
+        #surprise {
+            display: none;
+            width: 90%;
+            max-width: 800px;
+            padding: 40px 0;
+        }
+
+        .memory-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        img, video {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            font-style: italic;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .bday-title {
+            font-size: 3rem;
+            color: var(--gold);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f39c12; }
+            to { text-shadow: 0 0 30px #f1c40f, 0 0 40px #ff4757; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="countdown-container">
+        <h1>COUNTING DOWN TO THE BIG DAY</h1>
+        <div id="timer">
+            <div><span id="days">00</span><span class="unit">Days</span></div>
+            <div><span id="hours">00</span><span class="unit">Hrs</span></div>
+            <div><span id="mins">00</span><span class="unit">Mins</span></div>
+            <div><span id="secs">00</span><span class="unit">Secs</span></div>
+        </div>
+    </div>
+
+    <div id="surprise">
+        <h1 class="bday-title">🎉 HAPPY BIRTHDAY, DAD! 🎂</h1>
+        
+        <div class="memory-card">
+            <img src="photo1.jpg" alt="Dad's Photo"> <p class="message">"To the man who taught me everything I know. We love you!"</p>
+        </div>
+
+        <div class="memory-card">
+            <video controls>
+                <source src="birthday_wish.mp4" type="video/mp4"> Your browser does not support the video tag.
+            </video>
+            <p class="message">A special message from the whole family.</p>
+        </div>
+
+        <div class="memory-card">
+            <p class="message">"You aren't getting older, you're just becoming a classic! Have the best day ever."</p>
+        </div>
+    </div>
+
+    <script>
+        const targetDate = new Date("2024-12-30T00:00:00+05:30").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d;
+            document.getElementById("hours").innerText = h;
+            document.getElementById("mins").innerText = m;
+            document.getElementById("secs").innerText = s;
+
+            // WHEN COUNTDOWN FINISHES
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown-container").style.display = "none";
+                document.getElementById("surprise").style.display = "block";
+                document.body.style.background = "#2c3e50"; // Changes to a festive blue/gray
+                document.body.style.overflow = "auto"; // Allows scrolling to see messages
+                document.body.style.alignItems = "flex-start"; // Align to top for scrolling
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
