@@ -6,7 +6,6 @@
     <title>Nanna's Birthday Quest</title>
     
     <link rel="preload" as="image" href="funky_nanna.jpeg">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     
     <style>
@@ -23,8 +22,7 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             overflow-x: hidden;
-            /* Hardware acceleration for smoother scrolling */
-            transform: translateZ(0);
+            transform: translateZ(0); /* Hardware acceleration */
         }
 
         @keyframes gradientBG {
@@ -43,8 +41,6 @@
             width: 220px; height: 220px; border-radius: 50%; 
             border: 5px solid white; margin-bottom: 25px; 
             object-fit: cover; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-            /* Optimized animation */
-            will-change: transform;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -62,8 +58,8 @@
         }
 
         .game-card {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px); /* Reduced blur for performance */
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);
             max-width: 600px; width: 90%;
@@ -78,14 +74,14 @@
         .tribute-label { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px;}
         .tribute-text { font-family: 'Playfair Display', serif; font-style: italic; line-height: 1.5; }
 
-        /* Images Container */
+        /* Images */
         .img-row { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
         
-        /* Loading Placeholder */
+        /* Placeholder to show while loading */
         .img-placeholder {
             width: 45%; height: 180px; background: rgba(255,255,255,0.1);
             border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            border: 2px solid rgba(255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.3); font-size: 0.8rem;
         }
         
         .img-row img { 
@@ -113,17 +109,17 @@
             color: white; text-align: center; width: 80%; border-radius: 10px; font-size: 1.2rem;
         }
 
-        /* Optimized Confetti */
+        /* Confetti */
         .confetti { position: fixed; top: -10px; z-index: 999; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        video { width: 100%; border-radius: 15px; margin-top: 20px; border: 4px solid var(--gold); display:none; }
+        video { width: 100%; border-radius: 15px; margin-top: 20px; border: 4px solid var(--gold); }
     </style>
 </head>
 <body>
 
     <div id="stage-opening">
-        <img src="funky_nanna.jpeg" class="funky-img" onerror="this.src='funky_nanna.jpg'">
+        <img src="funky_nanna.jpeg" class="funky-img" onerror="this.onerror=null; this.src='funky_nanna.jpg'">
         <h1>Happy Birthday Nanna!</h1>
         <p style="margin-top: 20px;">Your 2025 Journey Begins Here.</p>
         <button class="btn" onclick="startQuest()">Start Quest</button>
@@ -283,7 +279,7 @@
             <h1 style="font-size:3rem; margin-bottom:10px;">WE LOVE YOU!</h1>
             <p>Your influence on our lives is immeasurable.</p>
             
-            <div id="video-container" style="min-height: 200px; display:flex; align-items:center; justify-content:center;">
+            <div id="video-container" style="min-height: 200px; display:flex; align-items:center; justify-content:center; margin-top:20px;">
                 <button class="btn" onclick="loadVideo()">▶️ Play Birthday Video</button>
             </div>
 
@@ -295,9 +291,9 @@
     </div>
 
     <script>
-        // --- 1. OPTIMIZED CONFETTI ---
+        // --- 1. LIGHTWEIGHT CONFETTI ---
         function spawnConfetti() {
-            if(document.hidden) return; // Stop if tab is hidden
+            if(document.hidden) return; 
             const el = document.createElement('div');
             el.className = 'confetti';
             el.style.left = Math.random() * 100 + 'vw';
@@ -308,9 +304,9 @@
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 5000);
         }
-        setInterval(spawnConfetti, 400); // Reduced frequency for performance
+        setInterval(spawnConfetti, 400);
 
-        // --- 2. NAVIGATION & LAZY LOADING ---
+        // --- 2. NAVIGATION ---
         function startQuest() {
             document.getElementById('stage-opening').style.display = 'none';
             document.getElementById('level1').style.display = 'flex';
@@ -328,15 +324,20 @@
             const reveal = document.getElementById('reveal'+n);
             reveal.style.display = 'block';
 
-            // SPEED TRICK: Download images ONLY when unlocked
+            // --- 3. FIX FOR INFINITE LOOPS ---
             const images = reveal.querySelectorAll('img.lazy');
             const placeholders = reveal.querySelectorAll('.img-placeholder');
             
             images.forEach((img, index) => {
                 const base = img.getAttribute('data-src');
-                // Try .jpeg first, then .jpg on error
+                
+                // Set logic: Try .jpeg. If fails, try .jpg. If fails, STOP (onerror=null).
                 img.src = base + ".jpeg";
-                img.onerror = function() { this.src = base + ".jpg"; };
+                
+                img.onerror = function() { 
+                    this.onerror = null; // Important: Stop the loop!
+                    this.src = base + ".jpg"; 
+                };
                 
                 img.onload = function() {
                     img.style.display = 'block';
@@ -344,7 +345,7 @@
                 };
             });
 
-            // Burst confetti
+            // Confetti burst
             for(let i=0; i<20; i++) setTimeout(spawnConfetti, i*50);
         }
 
@@ -354,17 +355,17 @@
             else alert("Try again, Nanna! 😊");
         }
 
-        // --- 3. VIDEO LOADING (Prevents Glitch) ---
+        // --- 4. VIDEO LOADER (Saves Bandwidth) ---
         function loadVideo() {
             const container = document.getElementById('video-container');
             container.innerHTML = `
-                <video controls autoplay>
+                <video controls autoplay style="width:100%; border:4px solid var(--gold); border-radius:15px;">
                     <source src="birthday_wish.mp4" type="video/mp4">
                     Your browser does not support video.
                 </video>`;
         }
 
-        // --- 4. MOVIE GAME ---
+        // --- 5. MOVIE GAME ---
         function populateMovies() {
             const movies = ["GAMECHANGER", "DAAKU", "THANDEL", "MIRAI", "KUBERA", "SANKRANT", "DRAGON", "VEERAMALLU", "HARAHARA", "SWAYAMBHU"];
             const container = document.getElementById('movie-list');
