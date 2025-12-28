@@ -1,16 +1,19 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nanna's Birthday Adventure!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bangers&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Nanna's 2025 Birthday Quest</title>
+    
+    <link rel="preload" as="image" href="funky_nanna.jpeg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --gold: #FFD700;
-            --pink: #FF1493;
-            --blue: #00BFFF;
-            --success: #2ecc71;
+            --dark: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.1);
             --bg-gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
         }
 
@@ -22,7 +25,6 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
         @keyframes gradientBG {
@@ -31,77 +33,99 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Confetti Styles */
-        .confetti {
-            position: fixed; top: -10px; z-index: 999;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
-
-        /* Opening Page */
+        /* Opening Screen */
         #stage-opening {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; text-align: center; background: rgba(0,0,0,0.4);
+            align-items: center; text-align: center; background: rgba(0,0,0,0.3);
         }
 
         .funky-img {
             width: 250px; height: 250px; border-radius: 50%; 
-            border: 8px solid white; margin-bottom: 20px; 
-            object-fit: cover; box-shadow: 0 0 40px rgba(0,0,0,0.5);
-            animation: bounce 2s infinite;
+            border: 6px solid white; margin-bottom: 25px; 
+            object-fit: cover; box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+            animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        h1 { font-family: 'Bangers', cursive; font-size: 4rem; color: var(--gold); text-shadow: 4px 4px 0px #000; letter-spacing: 3px; }
+        h1 { 
+            font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4rem); 
+            color: var(--gold); text-shadow: 2px 2px 4px rgba(0,0,0,0.5); margin: 0;
+        }
 
-        /* Level Containers */
+        /* Quest Levels */
         .quest-level {
-            display: none; min-height: 100vh; padding: 40px 20px; 
+            display: none; min-height: 100vh; padding: 20px; 
             flex-direction: column; justify-content: center; align-items: center; text-align: center;
         }
 
         .game-card {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(15px);
-            padding: 40px; border-radius: 30px; border: 2px solid rgba(255,255,255,0.3);
-            max-width: 600px; width: 100%; box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            padding: 40px 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2);
+            max-width: 600px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: slideUp 0.6s ease-out;
         }
 
-        .level-badge {
-            background: var(--gold); color: black; padding: 5px 20px; 
-            border-radius: 50px; font-weight: bold; font-size: 0.8rem; margin-bottom: 20px;
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Recognition Message Box */
+        .tribute-box {
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(0,0,0,0.3));
+            border-left: 4px solid var(--gold);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 10px 10px 0;
+            text-align: left;
         }
 
-        /* Buttons & Content */
+        .tribute-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .tribute-label {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; 
+            color: var(--gold); font-weight: bold; margin-bottom: 5px; display: block;
+        }
+
+        /* Images */
+        .img-row { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .img-row img { 
+            width: 45%; height: 180px; object-fit: cover; border-radius: 12px; 
+            border: 2px solid rgba(255,255,255,0.5); opacity: 0; transition: opacity 1s; 
+        }
+        .img-row img.loaded { opacity: 1; }
+
+        /* Controls */
         .btn {
-            background: var(--gold); color: black; border: none; padding: 15px 40px; 
-            font-weight: bold; cursor: pointer; border-radius: 50px; margin-top: 20px; 
-            text-transform: uppercase; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: var(--gold); color: black; border: none; padding: 16px 40px; 
+            font-weight: 800; cursor: pointer; border-radius: 50px; margin-top: 20px; 
+            text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
         }
+        .btn:hover { transform: scale(1.05); }
 
         .opt {
-            background: white; color: black; border: none; padding: 15px; 
-            margin: 10px 0; width: 100%; border-radius: 15px; font-weight: bold; 
-            cursor: pointer; transition: 0.3s;
+            background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3);
+            padding: 15px; margin: 8px 0; width: 100%; border-radius: 12px; 
+            font-size: 1rem; cursor: pointer; transition: 0.3s;
         }
-        .opt:hover { transform: scale(1.05); background: var(--blue); color: white; }
+        .opt:hover { background: var(--gold); color: black; border-color: var(--gold); }
 
         input {
-            padding: 15px; border-radius: 15px; border: none; text-align: center; 
-            width: 80%; font-size: 1.2rem; margin-bottom: 10px;
+            padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid #555; 
+            color: white; text-align: center; width: 80%; border-radius: 12px; font-size: 1.2rem;
         }
 
-        .reveal-box { display: none; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .img-row img { width: 45%; height: 180px; object-fit: cover; border-radius: 20px; border: 5px solid white; margin: 10px; }
+        .confetti { position: fixed; top: -10px; z-index: 999; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        .letters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
-        .letter { background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; text-align: left; }
-
-        video { width: 100%; border-radius: 20px; border: 5px solid white; margin-top: 20px; }
+        /* Video */
+        video { width: 100%; border-radius: 15px; margin-top: 20px; border: 4px solid var(--gold); }
     </style>
 </head>
 <body>
@@ -109,102 +133,254 @@
     <div id="stage-opening">
         <img src="funky_nanna.jpeg" class="funky-img" onerror="this.src='funky_nanna.jpg'">
         <h1>Happy Birthday Nanna!</h1>
-        <p style="font-size: 1.5rem;">The Quest of 2025 Begins...</p>
-        <button class="btn" onclick="goToLevel(1)">Start Celebration!</button>
+        <p style="font-size: 1.2rem; margin-top: 20px;">A celebration of your love and legacy in 2025.</p>
+        <button class="btn" onclick="goToLevel(1)">Start the Journey</button>
     </div>
 
     <div id="level1" class="quest-level">
-        <div class="level-badge">LEVEL 1</div>
         <div class="game-card">
             <div id="q1">
-                <h2>The Silver Milestone 💍</h2>
+                <h3 style="color:var(--gold)">LEVEL 1: THE SILVER JUBILEE</h3>
                 <p>What color saree did Amma wear for the 25th Anniversary?</p>
                 <button class="opt" onclick="win(1)">Rani Pink</button>
-                <button class="opt" onclick="alert('Wrong color! Try again')">Royal Blue</button>
-                <button class="opt" onclick="alert('Wrong color! Try again')">Emerald Green</button>
+                <button class="opt" onclick="alert('Try again, Nanna!')">Royal Blue</button>
+                <button class="opt" onclick="alert('Try again, Nanna!')">Emerald Green</button>
             </div>
-            <div id="reveal1" class="reveal-box">
-                <h2 style="color:var(--gold)">Level Passed! 🎉</h2>
-                <div class="img-row"><img src="anniversary1.jpeg" onerror="this.src='anniversary1.jpg'"><img src="anniversary2.jpeg" onerror="this.src='anniversary2.jpg'"></div>
+            <div id="reveal1" style="display:none;">
+                <h2 style="color:var(--gold)">Milestone Unlocked! 💍</h2>
+                <div class="img-row">
+                    <img data-src="anniversary1.jpeg" class="lazy">
+                    <img data-src="anniversary2.jpeg" class="lazy">
+                </div>
+                
+                <div class="tribute-box">
+                    <span class="tribute-label">Your Contribution</span>
+                    <div class="tribute-text">"25 years of standing strong. You built the foundation of this family with patience, love, and unwavering commitment. We are who we are because of you and Amma."</div>
+                </div>
+
                 <button class="btn" onclick="goToLevel(2)">Next Level →</button>
             </div>
         </div>
     </div>
 
     <div id="level2" class="quest-level">
-        <div class="level-badge">LEVEL 2</div>
         <div class="game-card">
             <div id="q2">
-                <h2>Priyanka's Big Move 🎓</h2>
-                <p>Which IIT city did Priyanka move to for VGSoM this year?</p>
-                <input type="text" id="ans2" placeholder="IIT ...">
+                <h3 style="color:var(--gold)">LEVEL 2: PRIYANKA'S DREAM</h3>
+                <p>Which IIT city did I move to for my MBA at VGSoM?</p>
+                <input type="text" id="ans2" placeholder="Enter City...">
                 <button class="btn" onclick="check(2, 'kharagpur')">Unlock</button>
             </div>
-            <div id="reveal2" class="reveal-box">
-                <h2 style="color:var(--gold)">Amazing! 🎉</h2>
-                <div class="img-row"><img src="vgsom1.jpeg" onerror="this.src='vgsom1.jpg'"><img src="vgsom2.jpeg" onerror="this.src='vgsom2.jpg'"></div>
+            <div id="reveal2" style="display:none;">
+                <h2 style="color:var(--gold)">Milestone Unlocked! 🎓</h2>
+                <div class="img-row">
+                    <img data-src="vgsom1.jpeg" class="lazy">
+                    <img data-src="vgsom2.jpeg" class="lazy">
+                </div>
+
+                <div class="tribute-box">
+                    <span class="tribute-label">Your Contribution</span>
+                    <div class="tribute-text">"This degree belongs to you as much as it does to me. Thank you for supporting my dreams and making my journey to IIT Kharagpur possible."</div>
+                </div>
+
                 <button class="btn" onclick="goToLevel(3)">Next Level →</button>
             </div>
         </div>
     </div>
 
-    <div id="level6" class="quest-level">
-        <div class="level-badge">FINAL QUEST</div>
+    <div id="level3" class="quest-level">
         <div class="game-card">
-            <h2>The Film Hunt 🎬</h2>
-            <p>Find the 10 Telugu Blockbusters of 2025!</p>
-            <div id="movie-list">
-                <button class="btn" onclick="goToLevel(7)">Unlock Surprise!</button>
+            <div id="q3">
+                <h3 style="color:var(--gold)">LEVEL 3: THE FUTURE DOCTOR</h3>
+                <p>What degree is Madhav halfway through completing? (4 Letters)</p>
+                <input type="text" id="ans3" maxlength="4" placeholder="Degree...">
+                <button class="btn" onclick="check(3, 'mbbs')">Unlock</button>
+            </div>
+            <div id="reveal3" style="display:none;">
+                <h2 style="color:var(--gold)">Milestone Unlocked! 🩺</h2>
+                <div class="img-row">
+                    <img data-src="madhav1.jpeg" class="lazy">
+                    <img data-src="madhav2.jpeg" class="lazy">
+                </div>
+
+                <div class="tribute-box">
+                    <span class="tribute-label">Your Contribution</span>
+                    <div class="tribute-text">"Guiding Madhav halfway to becoming a doctor is no small feat. Your mentorship and quiet sacrifices are his greatest strength."</div>
+                </div>
+
+                <button class="btn" onclick="goToLevel(4)">Next Level →</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="level4" class="quest-level">
+        <div class="game-card">
+            <div id="q4">
+                <h3 style="color:var(--gold)">LEVEL 4: FAMILY TRAVELS</h3>
+                <p>Where did we explore the historical ruins together this year?</p>
+                <input type="text" id="ans4" placeholder="Place Name...">
+                <button class="btn" onclick="check(4, 'hampi')">Unlock</button>
+            </div>
+            <div id="reveal4" style="display:none;">
+                <h2 style="color:var(--gold)">Milestone Unlocked! 🏛️</h2>
+                <div class="img-row">
+                    <img data-src="hampi1.jpeg" class="lazy">
+                    <img data-src="hampi2.jpeg" class="lazy">
+                </div>
+
+                <div class="tribute-box">
+                    <span class="tribute-label">Your Contribution</span>
+                    <div class="tribute-text">"Thank you for taking the time to show us the world. You taught us that the best legacy we can leave behind is beautiful memories together."</div>
+                </div>
+
+                <button class="btn" onclick="goToLevel(5)">Next Level →</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="level5" class="quest-level">
+        <div class="game-card">
+            <div id="q5">
+                <h3 style="color:var(--gold)">LEVEL 5: THE GOLDEN JUBILEE</h3>
+                <p>Unscramble Amma's age milestone: <b>F Y I T F</b></p>
+                <input type="text" id="ans5" placeholder="Unscramble...">
+                <button class="btn" onclick="check(5, 'fifty')">Unlock</button>
+            </div>
+            <div id="reveal5" style="display:none;">
+                <h2 style="color:var(--gold)">Milestone Unlocked! ✨</h2>
+                <div class="img-row">
+                    <img data-src="amma1.jpeg" class="lazy">
+                    <img data-src="amma2.jpeg" class="lazy">
+                </div>
+
+                <div class="tribute-box">
+                    <span class="tribute-label">Your Contribution</span>
+                    <div class="tribute-text">"For making Amma's 50th feel like a festival. You always put her happiness above everything else, setting the standard for true love."</div>
+                </div>
+
+                <button class="btn" onclick="goToLevel(6)">Final Challenge →</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="level6" class="quest-level">
+        <div class="game-card">
+            <h3 style="color:var(--gold)">FINAL QUEST: THE MOVIE HUNT</h3>
+            <p>Tap 10 Telugu Blockbusters of 2025 to unlock your letters!</p>
+            <div id="movie-list" style="display:flex; flex-wrap:wrap; justify-content:center; gap:5px;">
+                </div>
+            
+            <div id="reveal6" style="display:none;">
+                <h2 style="color:var(--gold); margin-top:30px;">Messages Unlocked! 💌</h2>
+                <div style="display:grid; grid-template-columns:1fr; gap:15px; margin-top:20px;">
+                    <div class="tribute-box" style="border-color: #fff;">
+                        <span class="tribute-label">FROM PRIYANKA</span>
+                        <div class="tribute-text">"Happy Birthday Nanna! You are my anchor. Every success I have at VGSoM is a reflection of your hard work."</div>
+                    </div>
+                    <div class="tribute-box" style="border-color: #fff;">
+                        <span class="tribute-label">FROM MADHAV</span>
+                        <div class="tribute-text">"To my role model. Thank you for showing me what dedication looks like. Happy Birthday!"</div>
+                    </div>
+                </div>
+                <button class="btn" onclick="goToLevel(7)">Watch Special Video →</button>
             </div>
         </div>
     </div>
 
     <div id="level7" class="quest-level">
         <div class="game-card">
-            <h1 style="font-size: 3rem;">Nanna, We Love You! ❤️</h1>
-            <div class="letters-grid">
-                <div class="letter">"Happy Birthday Nanna! My journey at VGSoM is your success." <b>- Priyanka</b></div>
-                <div class="letter">"Proud to be halfway through MBBS for you!" <b>- Madhav</b></div>
+            <h1 style="font-size:3rem; margin-bottom:10px;">WE LOVE YOU!</h1>
+            <p>Your influence on our lives is immeasurable.</p>
+            <video controls>
+                <source src="birthday_wish.mp4" type="video/mp4">
+            </video>
+            <div class="tribute-box" style="margin-top:30px;">
+                <span class="tribute-label">Final Note</span>
+                <div class="tribute-text">"Nanna, you are the silent engine of this family. Today, we celebrate not just your birthday, but everything you do for us every single day."</div>
             </div>
-            <video controls><source src="birthday_wish.mp4" type="video/mp4"></video>
-            <button class="btn" onclick="location.reload()">Replay Quest</button>
+            <button class="btn" onclick="location.reload()">Replay the Memories</button>
         </div>
     </div>
 
     <script>
-        // Confetti Generator
+        // --- 1. CONFETTI ENGINE ---
         function spawnConfetti() {
-            const colors = ['#FFD700', '#FF1493', '#00BFFF', '#ffffff', '#2ecc71'];
+            if(document.hidden) return;
             const el = document.createElement('div');
             el.className = 'confetti';
             el.style.left = Math.random() * 100 + 'vw';
-            el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            el.style.width = Math.random() * 8 + 6 + 'px';
+            el.style.backgroundColor = ['#FFD700', '#ff0055', '#00ddff', '#fff'][Math.floor(Math.random()*4)];
+            el.style.width = Math.random() * 8 + 5 + 'px';
             el.style.height = el.style.width;
-            el.style.animationDuration = Math.random() * 3 + 2 + 's';
-            el.style.opacity = Math.random();
+            el.style.animationDuration = Math.random() * 2 + 3 + 's';
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 5000);
         }
+        setInterval(spawnConfetti, 300);
 
-        setInterval(spawnConfetti, 200);
-
+        // --- 2. NAVIGATION ---
         function goToLevel(n) {
-            document.querySelectorAll('.quest-level, #stage-opening').forEach(el => el.style.display = 'none');
-            document.getElementById('level' + n).style.display = 'flex';
+            document.querySelectorAll('.quest-level, #stage-opening').forEach(e => e.style.display = 'none');
+            document.getElementById('level'+n).style.display = 'flex';
             window.scrollTo(0,0);
+            
+            // Populate movies if entering Level 6
+            if(n === 6 && document.getElementById('movie-list').children.length === 0) populateMovies();
         }
 
+        // --- 3. LOGIC ---
         function win(n) {
-            document.getElementById('q' + n).style.display = 'none';
-            document.getElementById('reveal' + n).style.display = 'block';
-            for(let i=0; i<50; i++) setTimeout(spawnConfetti, i*50);
+            document.getElementById('q'+n).style.display = 'none';
+            const rev = document.getElementById('reveal'+n);
+            rev.style.display = 'block';
+            
+            // Lazy load images with fallback
+            rev.querySelectorAll('img.lazy').forEach(img => {
+                const src = img.getAttribute('data-src');
+                img.src = src;
+                img.onerror = function() { this.src = src.replace('.jpeg', '.jpg'); };
+                img.onload = () => img.classList.add('loaded');
+            });
+
+            // Burst confetti
+            for(let i=0; i<30; i++) setTimeout(spawnConfetti, i*30);
         }
 
         function check(n, correct) {
-            let val = document.getElementById('ans' + n).value.toLowerCase().trim();
+            let val = document.getElementById('ans'+n).value.toLowerCase().trim();
             if(val.includes(correct)) win(n);
             else alert("Try again, Nanna! 😊");
+        }
+
+        // --- 4. MOVIE GAME ---
+        function populateMovies() {
+            const movies = ["GAMECHANGER", "DAAKU", "THANDEL", "MIRAI", "KUBERA", "SANKRANT", "DRAGON", "VEERAMALLU", "HARAHARA", "SWAYAMBHU"];
+            const container = document.getElementById('movie-list');
+            let found = 0;
+            movies.forEach(m => {
+                let btn = document.createElement('button');
+                btn.innerText = m;
+                btn.style.padding = "10px";
+                btn.style.margin = "5px";
+                btn.style.background = "rgba(255,255,255,0.1)";
+                btn.style.border = "1px solid #555";
+                btn.style.color = "white";
+                btn.style.borderRadius = "5px";
+                btn.style.cursor = "pointer";
+                btn.onclick = function() {
+                    if(this.style.background !== "var(--gold)") {
+                        this.style.background = "var(--gold)";
+                        this.style.color = "black";
+                        this.style.textDecoration = "line-through";
+                        found++;
+                        if(found === 10) {
+                            document.getElementById('movie-list').style.display = 'none';
+                            document.getElementById('reveal6').style.display = 'block';
+                        }
+                    }
+                };
+                container.appendChild(btn);
+            });
         }
     </script>
 </body>
