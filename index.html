@@ -274,7 +274,7 @@
             <div id="movie-grid"></div>
             <div id="reveal6" class="reveal-section">
                 <h2 style="color:var(--gold); font-size: 2.5rem;">ALL MILESTONES CLEARED! 🏆</h2>
-                <button class="btn" onclick="goToLevel(7)">Reveal Final Gift 🎁</button>
+                <button class="btn" onclick="goToLevel(7)">See Birthday Wishes 🎂</button>
             </div>
         </div>
     </div>
@@ -311,7 +311,7 @@
     </div>
 
     <script>
-        // --- CONFETTI ---
+        // --- MORE CONFETTI ---
         function spawnConfetti() {
             const el = document.createElement('div'); el.className = 'confetti';
             el.style.left = Math.random()*100+'vw'; 
@@ -320,7 +320,7 @@
             el.style.animationDuration=Math.random()*2+2.5+'s';
             document.body.appendChild(el); setTimeout(()=>el.remove(),5000);
         }
-        function burstConfetti() { for(let i=0;i<100;i++) setTimeout(spawnConfetti, i*20); }
+        function burstConfetti() { for(let i=0;i<200;i++) setTimeout(spawnConfetti, i*15); } // DOUBLED AMOUNT
 
         // --- NAVIGATION ---
         function startQuest() {
@@ -415,14 +415,16 @@
             if(val == 50) winLevel(5); else alert("Not quite! Try again.");
         }
 
-        // --- GAME 6: MOVIES ---
+        // --- GAME 6: MOVIES (UPDATED NAMES) ---
         const allMovies = [
-            {n:"Game Changer", v:true}, {n:"Daaku", v:true}, {n:"Thandel", v:true}, {n:"Mirai", v:true}, {n:"Kubera", v:true}, 
-            {n:"Sankrantiki Vastunam", v:true}, {n:"Dragon", v:true}, {n:"Hari Hara Veera Mallu", v:true}, {n:"Swayambhu", v:true}, {n:"The Raja Saab", v:true},
-            {n:"Baahubali", v:false}, {n:"RRR", v:false}, {n:"Pushpa", v:false}, {n:"KGF", v:false}, {n:"Salaar", v:false}, 
-            {n:"Devara", v:false}, {n:"Kalki 2898 AD", v:false}, {n:"HanuMan", v:false}, {n:"Guntur Kaaram", v:false}, {n:"Arjun Reddy", v:false}, 
-            {n:"Eega", v:false}, {n:"Magadheera", v:false}, {n:"Pokiri", v:false}, {n:"Kick", v:false}, {n:"Race Gurram", v:false}, 
-            {n:"Gabbar Singh", v:false}, {n:"Dookudu", v:false}, {n:"Manam", v:false}, {n:"Jersey", v:false}, {n:"Mahanati", v:false}
+            // Correct (10)
+            {n:"Game Changer", v:true}, {n:"Daaku Maharaj", v:true}, {n:"Thandel", v:true}, {n:"Mirai", v:true}, {n:"Kubera", v:true}, 
+            {n:"Sankrantiki Vastunam", v:true}, {n:"Dragon", v:true}, {n:"Hari Hara Veera Mallu", v:true}, {n:"Swayambhu", v:true}, {n:"Andhra King Taluka", v:true},
+            // Wrong (20)
+            {n:"The Raja Saab", v:false}, {n:"Baahubali", v:false}, {n:"RRR", v:false}, {n:"Pushpa", v:false}, {n:"KGF", v:false}, 
+            {n:"Salaar", v:false}, {n:"Devara", v:false}, {n:"Kalki 2898 AD", v:false}, {n:"HanuMan", v:false}, {n:"Guntur Kaaram", v:false}, 
+            {n:"Arjun Reddy", v:false}, {n:"Eega", v:false}, {n:"Magadheera", v:false}, {n:"Pokiri", v:false}, {n:"Kick", v:false}, 
+            {n:"Race Gurram", v:false}, {n:"Gabbar Singh", v:false}, {n:"Dookudu", v:false}, {n:"Manam", v:false}, {n:"Jersey", v:false}
         ];
         let foundMovies = 0;
         function initMovies() {
@@ -435,7 +437,11 @@
                     if(m.v) {
                         this.style.background = "var(--gold)"; this.style.color = "black"; this.style.fontWeight = "bold";
                         foundMovies++; if(foundMovies === 10) winLevel(6);
-                    } else { this.style.background = "var(--error)"; alert(`Wrong! '${m.n}' was not from 2025.`); }
+                    } else { 
+                        this.style.background = "var(--error)"; 
+                        if(m.n === "The Raja Saab") alert("Wrong! The Raja Saab releases in 2026.");
+                        else alert(`Wrong! '${m.n}' was not from 2025.`); 
+                    }
                 };
                 grid.appendChild(b);
             });
