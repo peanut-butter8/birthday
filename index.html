@@ -11,6 +11,8 @@
         :root {
             --gold: #FFD700;
             --bg-gradient: linear-gradient(-45deg, #FF0099, #493240, #1a2a6c, #fdbb2d);
+            --success: #2ecc71;
+            --error: #e74c3c;
         }
 
         body {
@@ -22,6 +24,7 @@
 
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
+        /* --- STAGES --- */
         #stage-opening { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         .funky-img { width: 240px; height: 240px; border-radius: 50%; border: 8px solid white; margin-bottom: 25px; object-fit: cover; box-shadow: 0 0 60px var(--gold); animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -31,23 +34,19 @@
         .quest-level { display: none; min-height: 100vh; padding: 20px; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         .game-card { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); padding: 35px; border-radius: 25px; border: 2px solid rgba(255,215,0,0.3); max-width: 700px; width: 95%; box-shadow: 0 30px 60px rgba(0,0,0,0.9); }
         
+        /* Level 1: Memory */
         .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px auto; max-width: 400px; }
         .memory-card { background: #fff; height: 80px; border-radius: 12px; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; color: #333; }
         .memory-card.hidden { background: #444; color: #444; border: 1px solid #666; }
 
+        /* General Button */
         .btn { background: var(--gold); color: black; border: none; padding: 18px 45px; font-weight: 900; cursor: pointer; border-radius: 60px; margin-top: 30px; text-transform: uppercase; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); font-size: 1.1rem; }
         
-        /* BIG SLIDER STYLES */
-        #game5 input[type=range] { 
-            width: 100%; 
-            margin: 50px 0; 
-            accent-color: var(--gold); 
-            height: 30px; /* Bigger height */
-            cursor: pointer;
-        }
-        .slider-label-box { background: rgba(255,215,0,0.2); padding: 20px; border-radius: 15px; margin-bottom: 10px; border: 1px dashed var(--gold); }
-        #age-val { font-size: 5rem; color: var(--gold); font-weight: 900; font-family: 'Bangers'; }
+        /* Slider Level */
+        #game5 input[type=range] { width: 100%; margin: 40px 0; accent-color: var(--gold); height: 40px; cursor: pointer; }
+        #age-val { font-size: 6rem; color: var(--gold); font-weight: 900; font-family: 'Bangers'; }
 
+        /* Images & Transitions */
         .img-row { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
         .img-row img { width: 45%; height: 220px; object-fit: cover; border-radius: 15px; border: 4px solid white; }
         #reveal1 img, #reveal5 img { object-position: top; }
@@ -55,7 +54,8 @@
         .msg-card { background: linear-gradient(to right, rgba(255,215,0,0.1), rgba(0,0,0,0.6)); padding: 25px; border-radius: 12px; border-left: 5px solid var(--gold); text-align: left; margin-top: 20px; }
         .msg-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; color: #f0f0f0; }
 
-        .movie-btn { padding: 12px; margin: 5px; background: rgba(255,255,255,0.1); border: 1px solid #666; color: white; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        /* Level 6: Movie Logic */
+        .movie-btn { padding: 12px 18px; margin: 5px; background: rgba(255,255,255,0.1); border: 1px solid #666; color: white; border-radius: 10px; cursor: pointer; font-size: 1rem; }
         .movie-btn.correct { background: var(--gold) !important; color: black !important; font-weight: bold; }
         .movie-btn.wrong { background: var(--error) !important; color: white !important; }
 
@@ -72,83 +72,56 @@
         <button class="btn" onclick="startQuest()">Let's Play!</button>
     </div>
 
-    <div id="level1" class="quest-level"><div class="game-card"><div id="game1"><h3>LEVEL 1: MEMORY MATCH</h3><div class="memory-grid" id="memory-board"></div></div><div id="reveal1" style="display:none;"><h2 style="color:var(--gold)">25 YEARS STRONG! 💍</h2><div class="img-row"><img src="anniversary1.jpeg" onerror="this.src='anniversary1.jpg'"><img src="anniversary2.jpeg" onerror="this.src='anniversary2.jpg'"></div><div class="msg-card"><div class="msg-text">"25 Years Strong. The heartbeat of our home: You and Amma."</div></div><button class="btn" onclick="goToLevel(2)">Next Level →</button></div></div></div>
+    <div id="level1" class="quest-level"><div class="game-card"><div id="game1"><h3>LEVEL 1: MEMORY MATCH</h3><div class="memory-grid" id="memory-board"></div></div><div id="reveal1" style="display:none;"><h2 style="color:var(--gold)">25 YEARS STRONG! 💍</h2><div class="img-row"><img src="anniversary1.jpeg" onerror="this.src='anniversary1.jpg'"><img src="anniversary2.jpeg" onerror="this.src='anniversary2.jpg'"></div><div class="msg-card"><div class="msg-text">"25 years strong. You and Amma."</div></div><button class="btn" onclick="goToLevel(2)">Next Level →</button></div></div></div>
 
-    <div id="level2" class="quest-level"><div class="game-card"><div id="game2"><h3>LEVEL 2: THE MBA CHALLENGE</h3><div id="scramble-ans" style="font-size: 2.5rem; border-bottom: 3px solid var(--gold); margin-bottom: 25px; font-family: 'Bangers'; letter-spacing: 4px;">_ _ _ _ _ _ _ _ _</div><div id="scramble-tiles" style="display:flex; flex-wrap:wrap; justify-content:center;"></div><button onclick="initScramble()" style="background:none; border:none; color:gray; cursor:pointer; font-size:0.8rem; margin-top:10px;">Reset City</button></div><div id="reveal2" style="display:none;"><h2 style="color:var(--gold)">IIT KHARAGPUR! 🎓</h2><div class="img-row"><img src="vgsom1.jpeg" onerror="this.src='vgsom1.jpg'"><img src="vgsom2.jpeg" onerror="this.src='vgsom2.jpg'"></div><div class="msg-card"><div class="msg-text">"Your support made the dream real. Finally made it into MBA!"</div></div><button class="btn" onclick="goToLevel(3)">Next Level →</button></div></div></div>
+    <div id="level2" class="quest-level"><div class="game-card"><div id="game2"><h3>LEVEL 2: THE MBA CHALLENGE</h3><div id="scramble-ans" style="font-size: 2.5rem; border-bottom: 3px solid var(--gold); margin-bottom: 25px; font-family: 'Bangers'; letter-spacing: 4px;">_ _ _ _ _ _ _ _ _</div><div id="scramble-tiles" style="display:flex; flex-wrap:wrap; justify-content:center;"></div><button onclick="initScramble()" style="background:none; border:none; color:gray; cursor:pointer; font-size:0.8rem; margin-top:10px;">Reset</button></div><div id="reveal2" style="display:none;"><h2 style="color:var(--gold)">IIT KHARAGPUR! 🎓</h2><div class="img-row"><img src="vgsom1.jpeg" onerror="this.src='vgsom1.jpg'"><img src="vgsom2.jpeg" onerror="this.src='vgsom2.jpg'"></div><div class="msg-card"><div class="msg-text">"Finally made it into MBA!"</div></div><button class="btn" onclick="goToLevel(3)">Next Level →</button></div></div></div>
 
-    <div id="level3" class="quest-level"><div class="game-card"><div id="game3"><h3>LEVEL 3: SURGEON'S REFLEX</h3><div style="width:100%; height:40px; background:#333; position:relative; overflow:hidden; border-radius:20px; margin:30px 0;"><div style="position:absolute; left:45%; width:10%; height:100%; background:green; opacity:0.6;"></div><div id="p-bar" style="position:absolute; left:0; width:8px; height:100%; background:white; animation: movePulse 0.7s linear infinite alternate;"></div></div><button class="btn" onclick="checkPulse()">STOP!</button></div><div id="reveal3" style="display:none;"><h2 style="color:var(--gold)">PRECISION! 🩺</h2><div class="img-row"><img src="madhav1.jpeg" onerror="this.src='madhav1.jpg'"><img src="madhav2.jpeg" onerror="this.src='madhav2.jpg'"></div><div class="msg-card"><div class="msg-text">"Steady hands and a focused mind. Halfway through one of the most difficult courses!"</div></div><button class="btn" onclick="goToLevel(4)">Next Level →</button></div></div></div>
+    <div id="level3" class="quest-level"><div class="game-card"><div id="game3"><h3>LEVEL 3: SURGEON'S REFLEX</h3><div style="width:100%; height:40px; background:#333; position:relative; overflow:hidden; border-radius:20px; margin:30px 0;"><div style="position:absolute; left:45%; width:10%; height:100%; background:green; opacity:0.6;"></div><div id="p-bar" style="position:absolute; left:0; width:8px; height:100%; background:white; animation: movePulse 0.7s linear infinite alternate;"></div></div><button class="btn" onclick="checkPulse()">STOP!</button></div><div id="reveal3" style="display:none;"><h2 style="color:var(--gold)">PRECISION! 🩺</h2><div class="img-row"><img src="madhav1.jpeg" onerror="this.src='madhav1.jpg'"><img src="madhav2.jpeg" onerror="this.src='madhav2.jpg'"></div><div class="msg-card"><div class="msg-text">"Halfway through one of the most difficult courses!"</div></div><button class="btn" onclick="goToLevel(4)">Next Level →</button></div></div></div>
     <style>@keyframes movePulse { from { left: 0%; } to { left: 98%; } }</style>
 
     <div id="level4" class="quest-level"><div class="game-card"><div id="game4"><h3>LEVEL 4: HISTORY RESTORED</h3><div id="tablet-board" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; max-width:240px; margin:20px auto;"></div></div><div id="reveal4" style="display:none;"><h2 style="color:var(--gold)">HAMPI EXPLORED! 🏛️</h2><div class="img-row"><img src="hampi1.jpeg" onerror="this.src='hampi1.jpg'"><img src="hampi2.jpeg" onerror="this.src='hampi2.jpg'"></div><div class="msg-card"><div class="msg-text">"The last minute planned trip turned out to be one of the best trips ever!"</div></div><button class="btn" onclick="goToLevel(5)">Next Level →</button></div></div></div>
 
-    <div id="level5" class="quest-level">
-        <div class="game-card">
-            <div id="game5">
-                <h3>LEVEL 5: THE GOLDEN GUESS</h3>
-                <p>Match Amma's Milestone Age (Slider is hidden until released!)</p>
-                <div class="slider-label-box">
-                    <div id="age-val">??</div>
-                </div>
-                <input type="range" min="0" max="100" value="0" step="1" oninput="document.getElementById('age-val').innerText='??'" onchange="checkSlider(this.value)">
-                <p style="font-size:0.9rem; color:#aaa;">Slide and Let Go!</p>
-            </div>
-            <div id="reveal5" style="display:none;">
-                <h2 style="color:var(--gold)">GOLDEN 50! ✨</h2>
-                <div class="img-row"><img src="amma1.jpeg" onerror="this.src='amma1.jpg'"><img src="amma2.jpeg" onerror="this.src='amma2.jpg'"></div>
-                <div class="msg-card"><div class="msg-text">"Celebrating 50 beautiful years. A Golden Jubilee for a Golden Lady!"</div></div>
-                <button class="btn" onclick="goToLevel(6)">Final Challenge →</button>
-            </div>
-        </div>
-    </div>
+    <div id="level5" class="quest-level"><div class="game-card"><div id="game5"><h3>LEVEL 5: THE GOLDEN GUESS</h3><div id="age-val">??</div><input type="range" min="0" max="100" value="0" oninput="document.getElementById('age-val').innerText='??'" onchange="checkSlider(this.value)"></div><div id="reveal5" style="display:none;"><h2 style="color:var(--gold)">GOLDEN 50! ✨</h2><div class="img-row"><img src="amma1.jpeg" onerror="this.src='amma1.jpg'"><img src="amma2.jpeg" onerror="this.src='amma2.jpg'"></div><div class="msg-card"><div class="msg-text">"Golden Jubilee!"</div></div><button class="btn" onclick="goToLevel(6)">Final Challenge →</button></div></div></div>
 
-    <div id="level6" class="quest-level">
-        <div class="game-card">
-            <h3>FINAL LEVEL: 2025 MOVIES</h3>
-            <p>Select the <b>10 Telugu Movies</b> from 2025.</p>
-            <div id="movie-grid" style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px;"></div>
-            <div id="reveal6" style="display:none;">
-                <h2 style="color:var(--gold)">QUEST COMPLETE! 🏆</h2>
-                <button class="btn" onclick="goToLevel(7)">See Birthday Wishes 🎂</button>
-            </div>
-        </div>
-    </div>
+    <div id="level6" class="quest-level"><div class="game-card"><div id="game6-content"><h3>FINAL LEVEL: 2025 MOVIES</h3><p>Select the <b>10 Telugu Movies</b> from 2025:</p><div id="movie-grid" style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px;"></div></div><div id="reveal6" style="display:none;"><h2 style="color:var(--gold)">QUEST COMPLETE! 🏆</h2><button class="btn" onclick="goToLevel(7)">See Birthday Wishes 🎂</button></div></div></div>
 
     <div id="level7" class="quest-level">
         <div class="game-card" style="max-width: 800px;">
-            <h1 style="font-size:3.5rem;">WE LOVE YOU NANNA!</h1>
+            <h1>WE LOVE YOU NANNA!</h1>
             <div style="text-align: left;">
-                <div class="msg-card" style="border-color: #ff69b4;"><span style="color:#ff69b4; font-weight:bold;">FROM PADMAM:</span><br><span class="msg-text">"Growing old with you is my greatest adventure. Happy birthday, my love!"</span></div>
-                <div class="msg-card" style="border-color: #00bfff;"><span style="color:#00bfff; font-weight:bold;">FROM PRIYANKA:</span><br><span class="msg-text">"Happy birthday nanna, Having you as my dad makes me smile, but knowing there is nothing you can do about it makes me laugh."</span></div>
-                <div class="msg-card" style="border-color: #2ecc71;"><span style="color:#2ecc71; font-weight:bold;">FROM MADHAV:</span><br><span class="msg-text">"Happy Birthday Nanna. Thank you for guiding me and standing by me. Thank you for everything. Thanks a lot."</span></div>
+                <div class="msg-card" style="border-color: #ff69b4;"><span style="color:#ff69b4; font-weight:bold;">PADMAM:</span><br><span class="msg-text">"Growing old with you is my greatest adventure. Happy birthday, my love!"</span></div>
+                <div class="msg-card" style="border-color: #00bfff;"><span style="color:#00bfff; font-weight:bold;">PRIYANKA:</span><br><span class="msg-text">"Happy birthday nanna, Having you as my dad makes me smile, but knowing there is nothing you can do about it makes me laugh."</span></div>
+                <div class="msg-card" style="border-color: #2ecc71;"><span style="color:#2ecc71; font-weight:bold;">MADHAV:</span><br><span class="msg-text">"Happy Birthday Nanna. Thank you for guiding me and standing by me. Thank you for everything. Thanks a lot."</span></div>
             </div>
             <div id="video-container" style="margin-top:20px;"><button class="btn" onclick="loadVideo()">▶️ Play Video</button></div>
         </div>
     </div>
 
     <script>
+        // --- Confetti ---
         function spawnConfetti() {
             const el = document.createElement('div'); el.className = 'confetti';
-            el.style.left = Math.random()*100+'vw'; 
-            el.style.backgroundColor=['#FFD700','#FF0099','#00ddff','#39ff14','#ffffff'][Math.floor(Math.random()*5)];
-            el.style.width=Math.random()*12+8+'px'; el.style.height=el.style.width; 
-            el.style.animationDuration=Math.random()*2+2.5+'s';
+            el.style.left = Math.random()*100+'vw'; el.style.backgroundColor=['#FFD700','#FF0099','#00ddff','#39ff14','#ffffff'][Math.floor(Math.random()*5)];
+            el.style.width=Math.random()*12+8+'px'; el.style.height=el.style.width; el.style.animationDuration=Math.random()*2+2.5+'s';
             document.body.appendChild(el); setTimeout(()=>el.remove(),5000);
         }
-        function burstConfetti() { for(let i=0;i<150;i++) setTimeout(spawnConfetti, i*15); }
+        function burst() { for(let i=0;i<180;i++) setTimeout(spawnConfetti, i*15); }
 
         function startQuest() { document.getElementById('stage-opening').style.display='none'; document.getElementById('level1').style.display='flex'; initMemory(); }
 
         function goToLevel(n) { 
             document.querySelectorAll('.quest-level').forEach(e=>e.style.display='none'); 
-            document.getElementById('level'+n).style.display='flex'; 
+            const target = document.getElementById('level'+n);
+            if(target) target.style.display='flex'; 
             window.scrollTo(0,0); 
             if(n===2)initScramble(); if(n===4)initTablet(); if(n===6)initMovies(); 
         }
 
+        // Generic win (Levels 1-5)
         function winLevel(n) { 
             document.getElementById('game'+n).style.display='none'; 
             document.getElementById('reveal'+n).style.display='block'; 
-            burstConfetti(); 
+            burst(); 
         }
 
         // Memory
@@ -158,10 +131,10 @@
 
         // Scramble
         const city="KHARAGPUR"; let typed="";
-        function initScramble(){ typed=""; document.getElementById('scramble-ans').innerText="_ _ _ _ _ _ _ _ _"; const con=document.getElementById('scramble-tiles'); con.innerHTML=''; city.split('').sort(()=>Math.random()-0.5).forEach(l=>{ const t=document.createElement('div'); t.className='letter-tile'; t.innerText=l; t.onclick=()=>{ typed+=l; document.getElementById('scramble-ans').innerText=typed; t.style.opacity='0'; t.style.pointerEvents='none'; if(typed===city)winLevel(2); else if(typed.length===9){alert("Wrong!"); initScramble();} }; con.appendChild(t); }); }
+        function initScramble(){ typed=""; document.getElementById('scramble-ans').innerText="_ ".repeat(9); const con=document.getElementById('scramble-tiles'); con.innerHTML=''; city.split('').sort(()=>Math.random()-0.5).forEach(l=>{ const t=document.createElement('div'); t.className='letter-tile'; t.innerText=l; t.onclick=()=>{ typed+=l; document.getElementById('scramble-ans').innerText=typed; t.style.opacity='0'; t.style.pointerEvents='none'; if(typed===city)winLevel(2); else if(typed.length===9){alert("Wrong!"); initScramble();} }; con.appendChild(t); }); }
 
         // Pulse
-        function checkPulse(){ const p=document.getElementById('p-bar'); const pct=(p.offsetLeft/p.parentElement.offsetWidth)*100; if(pct>=45&&pct<=55)winLevel(3); else alert("Try Again!"); }
+        function checkPulse(){ const p=document.getElementById('p-bar'); const pct=(p.offsetLeft/p.parentElement.offsetWidth)*100; if(pct>=45&&pct<=55)winLevel(3); else alert("Missed!"); }
 
         // Tablet
         let pieces=[0,0,0,0]; function initTablet(){ const b=document.getElementById('tablet-board'); b.innerHTML=''; pieces=pieces.map(()=>[90,180,270][Math.floor(Math.random()*3)]); pieces.forEach((a,i)=>{ const p=document.createElement('div'); p.className='tablet-piece'; p.innerText=['🛕','🐘','🕉️','🗿'][i]; p.style.transform=`rotate(${a}deg)`; p.onclick=()=>{ pieces[i]=(pieces[i]+90)%360; p.style.transform=`rotate(${pieces[i]}deg)`; if(pieces.every(x=>x===0))winLevel(4); }; b.appendChild(p); }); }
@@ -169,42 +142,39 @@
         // Slider
         function checkSlider(v){ document.getElementById('age-val').innerText=v; if(v==50)winLevel(5); else alert("Try again!"); }
 
-        // Fixed Movie Game Logic
+        // Movie Game (REWRITTEN TRIGGER)
         const allMovies = [
             {n:"Game Changer",v:true},{n:"Daaku Maharaj",v:true},{n:"Thandel",v:true},{n:"Mirai",v:true},{n:"Kubera",v:true},
             {n:"Sankrantiki Vastunam",v:true},{n:"Dragon",v:true},{n:"Hari Hara Veera Mallu",v:true},{n:"Swayambhu",v:true},{n:"Andhra King Taluka",v:true},
-            {n:"The Raja Saab",v:false},{n:"Baahubali",v:false},{n:"RRR",v:false},{n:"Pushpa",v:false},{n:"KGF",v:false},{n:"Salaar",v:false},{n:"Devara",v:false},{n:"Kalki 2898 AD",v:false},{n:"HanuMan",v:false},{n:"Pokiri",v:false}
+            {n:"Baahubali",v:false},{n:"RRR",v:false},{n:"Pushpa",v:false},{n:"KGF",v:false},{n:"Salaar",v:false},{n:"Devara",v:false},{n:"Kalki 2898 AD",v:false},{n:"HanuMan",v:false},{n:"Pokiri",v:false},{n:"Kick",v:false},{n:"Manam",v:false}
         ];
-        
         function initMovies(){ 
             const g=document.getElementById('movie-grid'); 
-            g.innerHTML = ''; // Always clear first
-            let foundCount = 0; 
-            
-            // Shuffle list
-            const shuffled = [...allMovies].sort(() => Math.random() - 0.5);
-            
-            shuffled.forEach(m => { 
-                const b = document.createElement('div'); 
-                b.className = 'movie-btn'; 
-                b.innerText = m.n; 
-                b.onclick = () => {
-                    if(b.classList.contains('correct') || b.classList.contains('wrong')) return;
-                    
-                    if(m.v) { 
+            g.innerHTML = ''; 
+            let count = 0; 
+            allMovies.sort(()=>Math.random()-0.5).forEach(m=>{ 
+                const b=document.createElement('div'); 
+                b.className='movie-btn'; 
+                b.innerText=m.n; 
+                b.onclick=()=>{ 
+                    if(m.v && !b.classList.contains('correct')){ 
                         b.classList.add('correct'); 
-                        foundCount++; 
-                        if(foundCount === 10) winLevel(6); 
-                    } else { 
+                        count++; 
+                        if(count === 10){ 
+                            document.getElementById('game6-content').style.display='none';
+                            document.getElementById('reveal6').style.display='block';
+                            burst();
+                        } 
+                    } else if(!m.v){ 
                         b.classList.add('wrong'); 
-                        alert("Not a 2025 release!"); 
+                        alert("Not from 2025!"); 
                     } 
                 }; 
                 g.appendChild(b); 
             }); 
         }
 
-        function loadVideo(){ document.getElementById('video-container').innerHTML='<video controls autoplay><source src="birthday_wish.mp4" type="video/mp4"></video>'; }
+        function loadVideo(){ document.getElementById('video-container').innerHTML='<video controls autoplay style="width:100%;"><source src="birthday_wish.mp4" type="video/mp4"></video>'; }
     </script>
 </body>
 </html>
