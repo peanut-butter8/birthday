@@ -5,34 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nanna's Birthday Quest</title>
     
-    <link rel="preload" as="image" href="funky_nanna.jpeg">
+    <link rel="preload" as="image" href="funky_nanna.jpg">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --gold: #FFD700;
-            --bg-gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-        }
+        :root { --gold: #FFD700; --bg-gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); }
 
         body {
-            background: var(--bg-gradient);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-            transform: translateZ(0); /* Speed boost */
+            background: var(--bg-gradient); background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite; color: white;
+            font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden;
+            transform: translateZ(0);
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* Opening Screen */
         #stage-opening {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; 
             align-items: center; text-align: center; background: rgba(0,0,0,0.3);
@@ -43,38 +31,30 @@
             border: 5px solid white; margin-bottom: 25px; 
             object-fit: cover; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
             animation: float 3s ease-in-out infinite;
+            background-color: #333; /* Fallback color */
         }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        h1 { 
-            font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4rem); 
-            color: var(--gold); text-shadow: 2px 2px 4px rgba(0,0,0,0.5); margin: 0;
-        }
+        h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4rem); color: var(--gold); margin: 0; }
 
-        /* Quest Levels */
-        .quest-level {
-            display: none; min-height: 100vh; padding: 20px; 
-            flex-direction: column; justify-content: center; align-items: center; text-align: center;
-        }
+        .quest-level { display: none; min-height: 100vh; padding: 20px; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 
         .game-card {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
             padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);
             max-width: 600px; width: 90%;
         }
 
-        /* Images Container */
-        .img-row { display: flex; gap: 10px; justify-content: center; margin-top: 20px; position: relative; min-height: 180px; }
+        .img-row { display: flex; gap: 10px; justify-content: center; margin-top: 20px; min-height: 180px; }
         
         .img-container {
             width: 45%; height: 180px; position: relative;
             border-radius: 10px; overflow: hidden; border: 2px solid white;
+            background: #222;
         }
 
-        /* The Spinner (Visible while loading) */
+        /* Loading Spinner */
         .loader {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 30px; height: 30px; border: 4px solid rgba(255,255,255,0.3);
@@ -90,10 +70,8 @@
         }
         .img-row img.loaded { opacity: 1; }
 
-        /* Tribute Box */
         .tribute-box {
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 4px solid var(--gold);
+            background: rgba(255, 255, 255, 0.05); border-left: 4px solid var(--gold);
             padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; text-align: left;
         }
         .tribute-label { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px;}
@@ -101,32 +79,26 @@
 
         .btn {
             background: var(--gold); color: black; border: none; padding: 15px 35px; 
-            font-weight: 800; cursor: pointer; border-radius: 50px; margin-top: 20px; 
-            text-transform: uppercase; letter-spacing: 1px;
+            font-weight: 800; cursor: pointer; border-radius: 50px; margin-top: 20px; text-transform: uppercase;
         }
 
         .opt {
             background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3);
-            padding: 15px; margin: 8px 0; width: 100%; border-radius: 10px; 
-            font-size: 1rem; cursor: pointer;
+            padding: 15px; margin: 8px 0; width: 100%; border-radius: 10px; font-size: 1rem; cursor: pointer;
         }
         .opt:hover { background: var(--gold); color: black; }
-
-        input {
-            padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid #555; 
-            color: white; text-align: center; width: 80%; border-radius: 10px; font-size: 1.2rem;
-        }
-
+        input { padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid #555; color: white; text-align: center; width: 80%; border-radius: 10px; font-size: 1.2rem; }
+        
         .confetti { position: fixed; top: -10px; z-index: 999; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
         video { width: 100%; border-radius: 15px; margin-top: 20px; border: 4px solid var(--gold); }
     </style>
 </head>
 <body>
 
     <div id="stage-opening">
-        <img src="funky_nanna.jpeg" class="funky-img" onerror="this.onerror=null; this.src='funky_nanna.jpg'">
+        <img src="funky_nanna.jpg" class="funky-img" 
+             onerror="this.onerror=null; this.src='funky_nanna.jpeg'; this.onerror=function(){this.src='funky_nanna.png'}">
         <h1>Happy Birthday Nanna!</h1>
         <p style="margin-top: 20px;">Your 2025 Journey Begins Here.</p>
         <button class="btn" onclick="startQuest()">Start Quest</button>
@@ -136,26 +108,19 @@
         <div class="game-card">
             <div id="q1">
                 <h3 style="color:var(--gold)">LEVEL 1: SILVER JUBILEE</h3>
-                <p>What color saree did Amma wear for the 25th Anniversary?</p>
+                <p>What color saree did Amma wear?</p>
                 <button class="opt" onclick="unlockLevel(1)">Rani Pink</button>
                 <button class="opt" onclick="alert('Try again!')">Royal Blue</button>
-                <button class="opt" onclick="alert('Try again!')">Emerald Green</button>
             </div>
             <div id="reveal1" style="display:none;">
                 <h2 style="color:var(--gold)">Milestone Unlocked! 💍</h2>
                 <div class="img-row">
-                    <div class="img-container">
-                        <div class="loader"></div>
-                        <img data-name="anniversary1">
-                    </div>
-                    <div class="img-container">
-                        <div class="loader"></div>
-                        <img data-name="anniversary2">
-                    </div>
+                    <div class="img-container"><div class="loader"></div><img data-name="anniversary1"></div>
+                    <div class="img-container"><div class="loader"></div><img data-name="anniversary2"></div>
                 </div>
                 <div class="tribute-box">
                     <span class="tribute-label">Your Contribution</span>
-                    <div class="tribute-text">"25 years of standing strong. You built the foundation of this family with patience and love."</div>
+                    <div class="tribute-text">"25 years of standing strong. You built the foundation of this family."</div>
                 </div>
                 <button class="btn" onclick="goToLevel(2)">Next Level →</button>
             </div>
@@ -166,7 +131,7 @@
         <div class="game-card">
             <div id="q2">
                 <h3 style="color:var(--gold)">LEVEL 2: PRIYANKA'S DREAM</h3>
-                <p>Which IIT city did I move to for my MBA?</p>
+                <p>Which IIT city did I move to?</p>
                 <input type="text" id="ans2" placeholder="City Name...">
                 <button class="btn" onclick="check(2, 'kharagpur')">Unlock</button>
             </div>
@@ -178,7 +143,7 @@
                 </div>
                 <div class="tribute-box">
                     <span class="tribute-label">Your Contribution</span>
-                    <div class="tribute-text">"Thank you for supporting my dreams and making my journey to VGSoM possible."</div>
+                    <div class="tribute-text">"Thank you for supporting my dreams and making VGSoM possible."</div>
                 </div>
                 <button class="btn" onclick="goToLevel(3)">Next Level →</button>
             </div>
@@ -189,7 +154,7 @@
         <div class="game-card">
             <div id="q3">
                 <h3 style="color:var(--gold)">LEVEL 3: FUTURE DOCTOR</h3>
-                <p>What degree is Madhav halfway through? (4 letters)</p>
+                <p>What degree is Madhav halfway through?</p>
                 <input type="text" id="ans3" maxlength="4" placeholder="Degree...">
                 <button class="btn" onclick="check(3, 'mbbs')">Unlock</button>
             </div>
@@ -201,7 +166,7 @@
                 </div>
                 <div class="tribute-box">
                     <span class="tribute-label">Your Contribution</span>
-                    <div class="tribute-text">"Guiding Madhav halfway to becoming a doctor. Your mentorship is his strength."</div>
+                    <div class="tribute-text">"Guiding Madhav halfway to becoming a doctor."</div>
                 </div>
                 <button class="btn" onclick="goToLevel(4)">Next Level →</button>
             </div>
@@ -212,7 +177,7 @@
         <div class="game-card">
             <div id="q4">
                 <h3 style="color:var(--gold)">LEVEL 4: FAMILY TRAVELS</h3>
-                <p>Where did we explore historical ruins together?</p>
+                <p>Where did we explore historical ruins?</p>
                 <input type="text" id="ans4" placeholder="Place Name...">
                 <button class="btn" onclick="check(4, 'hampi')">Unlock</button>
             </div>
@@ -224,7 +189,7 @@
                 </div>
                 <div class="tribute-box">
                     <span class="tribute-label">Your Contribution</span>
-                    <div class="tribute-text">"Teaching us that the best legacy is beautiful memories together."</div>
+                    <div class="tribute-text">"Teaching us that the best legacy is beautiful memories."</div>
                 </div>
                 <button class="btn" onclick="goToLevel(5)">Next Level →</button>
             </div>
@@ -235,8 +200,8 @@
         <div class="game-card">
             <div id="q5">
                 <h3 style="color:var(--gold)">LEVEL 5: GOLDEN JUBILEE</h3>
-                <p>Unscramble Amma's age milestone: <b>F Y I T F</b></p>
-                <input type="text" id="ans5" placeholder="Unscramble...">
+                <p>Unscramble Amma's age: <b>F Y I T F</b></p>
+                <input type="text" id="ans5" placeholder="Number...">
                 <button class="btn" onclick="check(5, 'fifty')">Unlock</button>
             </div>
             <div id="reveal5" style="display:none;">
@@ -247,7 +212,7 @@
                 </div>
                 <div class="tribute-box">
                     <span class="tribute-label">Your Contribution</span>
-                    <div class="tribute-text">"For making Amma's 50th a festival. You always put her happiness first."</div>
+                    <div class="tribute-text">"For making Amma's 50th a festival."</div>
                 </div>
                 <button class="btn" onclick="goToLevel(6)">Final Challenge →</button>
             </div>
@@ -257,150 +222,108 @@
     <div id="level6" class="quest-level">
         <div class="game-card">
             <h3 style="color:var(--gold)">FINAL QUEST: MOVIE HUNT</h3>
-            <p>Tap 10 Telugu Blockbusters of 2025 to unlock letters!</p>
+            <p>Find 10 Telugu Blockbusters of 2025!</p>
             <div id="movie-list" style="display:flex; flex-wrap:wrap; justify-content:center; gap:5px;"></div>
-            
             <div id="reveal6" style="display:none;">
-                <h2 style="color:var(--gold); margin-top:30px;">Messages Unlocked! 💌</h2>
-                <div style="display:grid; grid-template-columns:1fr; gap:15px; margin-top:20px;">
-                    <div class="tribute-box" style="border-color: #fff;">
-                        <span class="tribute-label">PRIYANKA</span>
-                        <div class="tribute-text">"Happy Birthday Nanna! My success at VGSoM is yours."</div>
-                    </div>
-                    <div class="tribute-box" style="border-color: #fff;">
-                        <span class="tribute-label">MADHAV</span>
-                        <div class="tribute-text">"To my role model. Thank you for showing me dedication."</div>
-                    </div>
+                <h2 style="color:var(--gold)">All Unlocked! 💌</h2>
+                <div style="display:grid; grid-template-columns:1fr; gap:10px; margin-top:20px;">
+                    <div class="tribute-box" style="border-color:#fff"><div class="tribute-text">"Happy Birthday Nanna! - Priyanka"</div></div>
+                    <div class="tribute-box" style="border-color:#fff"><div class="tribute-text">"To my role model. - Madhav"</div></div>
                 </div>
-                <button class="btn" onclick="goToLevel(7)">Watch Special Video →</button>
+                <button class="btn" onclick="goToLevel(7)">Watch Video →</button>
             </div>
         </div>
     </div>
 
     <div id="level7" class="quest-level">
         <div class="game-card">
-            <h1 style="font-size:3rem; margin-bottom:10px;">WE LOVE YOU!</h1>
-            <p>Your influence on our lives is immeasurable.</p>
-            
+            <h1 style="font-size:3rem;">WE LOVE YOU!</h1>
             <div id="video-container" style="min-height: 200px; display:flex; align-items:center; justify-content:center; margin-top:20px;">
-                <button class="btn" onclick="loadVideo()">▶️ Play Birthday Video</button>
+                <button class="btn" onclick="loadVideo()">▶️ Play Video</button>
             </div>
-
-            <div class="tribute-box" style="margin-top:30px;">
-                <span class="tribute-label">Final Note</span>
-                <div class="tribute-text">"Nanna, you are the silent engine of this family. We celebrate you today and always."</div>
+            <div class="tribute-box" style="margin-top:20px;">
+                <div class="tribute-text">"Nanna, you are the engine of this family. Happy Birthday!"</div>
             </div>
         </div>
     </div>
 
     <script>
         function spawnConfetti() {
-            if(document.hidden) return; 
-            const el = document.createElement('div');
-            el.className = 'confetti';
-            el.style.left = Math.random() * 100 + 'vw';
-            el.style.backgroundColor = ['#FFD700', '#ff0055', '#00ddff', '#fff'][Math.floor(Math.random()*4)];
-            el.style.width = Math.random() * 8 + 5 + 'px';
-            el.style.height = el.style.width;
-            el.style.animationDuration = Math.random() * 2 + 3 + 's';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 5000);
+            if(document.hidden) return;
+            const el = document.createElement('div'); el.className = 'confetti';
+            el.style.left = Math.random()*100+'vw'; el.style.backgroundColor=['#FFD700','#ff0055','#00ddff'][Math.floor(Math.random()*3)];
+            el.style.width=Math.random()*8+5+'px'; el.style.height=el.style.width; el.style.animationDuration=Math.random()*2+3+'s';
+            document.body.appendChild(el); setTimeout(()=>el.remove(),5000);
         }
         setInterval(spawnConfetti, 400);
 
         function startQuest() {
-            document.getElementById('stage-opening').style.display = 'none';
-            document.getElementById('level1').style.display = 'flex';
-            // Start pre-loading Level 1 images immediately
-            preloadImagesForLevel(1);
+            document.getElementById('stage-opening').style.display='none';
+            document.getElementById('level1').style.display='flex';
+            preloadImages(1);
         }
 
         function goToLevel(n) {
-            document.querySelectorAll('.quest-level').forEach(e => e.style.display = 'none');
-            document.getElementById('level'+n).style.display = 'flex';
+            document.querySelectorAll('.quest-level').forEach(e=>e.style.display='none');
+            document.getElementById('level'+n).style.display='flex';
             window.scrollTo(0,0);
             if(n===6) populateMovies();
-            
-            // KEY FIX: Start downloading the images for THIS level right now
-            // This happens while the user reads the question
-            preloadImagesForLevel(n);
+            preloadImages(n);
         }
 
-        // New Helper: Starts downloading images in background
-        function preloadImagesForLevel(n) {
-            const reveal = document.getElementById('reveal'+n);
-            if (!reveal) return;
-            
-            const images = reveal.querySelectorAll('img[data-name]');
-            images.forEach(img => {
-                if (img.getAttribute('src')) return; // Already loaded
-
+        function preloadImages(n) {
+            const rev = document.getElementById('reveal'+n);
+            if(!rev) return;
+            rev.querySelectorAll('img[data-name]').forEach(img => {
+                if(img.src) return; 
                 const base = img.getAttribute('data-name');
-                const testImg = new Image();
-                
-                // Try .jpeg first
-                testImg.src = base + ".jpeg";
-                
-                testImg.onload = function() {
-                    img.src = this.src;
-                    img.classList.add('loaded');
+                // LOGIC: Try .jpg first. If error, try .jpeg. If error, try .png
+                img.src = base + ".jpg";
+                img.onerror = function() {
+                    this.onerror = function() {
+                        this.onerror = null; 
+                        this.src = base + ".png"; // Last resort
+                    };
+                    this.src = base + ".jpeg";
                 };
-                
-                testImg.onerror = function() {
-                    // If .jpeg fails, try .jpg
-                    this.onerror = null; // Stop loops
-                    this.src = base + ".jpg";
+                img.onload = function() { 
+                    this.classList.add('loaded'); 
+                    this.parentElement.querySelector('.loader').style.display='none';
                 };
             });
         }
 
         function unlockLevel(n) {
-            document.getElementById('q'+n).style.display = 'none';
-            document.getElementById('reveal'+n).style.display = 'block';
-            for(let i=0; i<20; i++) setTimeout(spawnConfetti, i*50);
+            document.getElementById('q'+n).style.display='none';
+            document.getElementById('reveal'+n).style.display='block';
+            for(let i=0;i<20;i++) setTimeout(spawnConfetti, i*50);
         }
 
         function check(n, correct) {
-            let val = document.getElementById('ans'+n).value.toLowerCase().trim();
-            if(val.includes(correct)) unlockLevel(n);
-            else alert("Try again, Nanna! 😊");
+            if(document.getElementById('ans'+n).value.toLowerCase().includes(correct)) unlockLevel(n);
+            else alert("Try again!");
         }
 
         function loadVideo() {
-            const container = document.getElementById('video-container');
-            container.innerHTML = `
+            document.getElementById('video-container').innerHTML = `
                 <video controls autoplay style="width:100%; border:4px solid var(--gold); border-radius:15px;">
                     <source src="birthday_wish.mp4" type="video/mp4">
-                    Your browser does not support video.
                 </video>`;
         }
 
         function populateMovies() {
-            const movies = ["GAMECHANGER", "DAAKU", "THANDEL", "MIRAI", "KUBERA", "SANKRANT", "DRAGON", "VEERAMALLU", "HARAHARA", "SWAYAMBHU"];
-            const container = document.getElementById('movie-list');
-            if(container.children.length > 0) return;
-            
-            let found = 0;
-            movies.forEach(m => {
-                let btn = document.createElement('button');
-                btn.innerText = m;
-                btn.style.padding = "10px"; btn.style.margin = "5px";
-                btn.style.background = "rgba(255,255,255,0.1)"; btn.style.border = "1px solid #555";
-                btn.style.color = "white"; btn.style.borderRadius = "5px"; btn.style.cursor = "pointer";
-                
-                btn.onclick = function() {
-                    if(this.style.background !== "var(--gold)") {
-                        this.style.background = "var(--gold)";
-                        this.style.color = "black";
-                        this.style.textDecoration = "line-through";
-                        found++;
-                        if(found === 10) {
-                            document.getElementById('movie-list').style.display = 'none';
-                            document.getElementById('reveal6').style.display = 'block';
-                        }
+            const list = document.getElementById('movie-list');
+            if(list.children.length>0) return;
+            let count=0;
+            ["GAMECHANGER","DAAKU","THANDEL","MIRAI","KUBERA","SANKRANT","DRAGON","VEERAMALLU","HARAHARA","SWAYAMBHU"].forEach(m=>{
+                let b = document.createElement('button'); b.className='opt'; b.style.width='auto'; b.style.margin='5px'; b.innerText=m;
+                b.onclick = function() {
+                    if(this.style.background!=='var(--gold)') {
+                        this.style.background='var(--gold)'; this.style.color='black'; count++;
+                        if(count===10) { document.getElementById('movie-list').style.display='none'; document.getElementById('reveal6').style.display='block'; }
                     }
                 };
-                container.appendChild(btn);
+                list.appendChild(b);
             });
         }
     </script>
